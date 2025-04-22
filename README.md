@@ -9,6 +9,8 @@ A proof-of-concept frontend application demonstrating the MACH swap functionalit
 - Node.js 18+
 - npm or yarn
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fggarza5%2Fmach-next-first&env=PRIVATE_KEY&envDescription=Private%20key%20for%20swap%20wallet&project-name=mach-swapper&repository-name=my-mach-swapper&demo-title=Mach%20SDK%20Swap%20Widget)
+
 ## Getting Started
 
 # Install dependencies
