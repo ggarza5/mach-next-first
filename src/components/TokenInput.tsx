@@ -26,8 +26,9 @@ export function TokenInput({
     if (readOnly || !onAmountChange) return;
 
     const value = e.target.value.replace(/,/g, '');
-    if (value === '' || /^\d*\.?\d*$/.test(value)) {
-      onAmountChange(value);
+    if (value === '' || /^(0|0\.\d*|\.\d*|\d+\.?\d*)$/.test(value)) {
+      const formattedValue = value.startsWith('.') ? `0${value}` : value;
+      onAmountChange(formattedValue);
     }
   };
 
@@ -67,6 +68,8 @@ export function TokenInput({
                   ? amount
                   : amount === ''
                   ? ''
+                  : amount.startsWith('.') || amount.startsWith('0')
+                  ? amount
                   : Number(amount).toLocaleString('en-US', {
                       maximumFractionDigits: 20,
                       useGrouping: true,

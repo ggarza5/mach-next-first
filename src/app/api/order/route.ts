@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { order } from '@tristeroresearch/mach-sdk';
+import { order, config, dollarToTokenValue } from '@tristeroresearch/mach-sdk';
 import { type Hex } from 'viem';
 
 export async function POST(req: NextRequest) {
@@ -10,14 +10,12 @@ export async function POST(req: NextRequest) {
     if (!srcAssetAddress || !dstAssetAddress || !srcAmount)
       return NextResponse.json({ error: 'Missing required parameters' }, { status: 400 });
 
-    // Note: The `order` function will attempt to load PRIVATE_KEY from env vars.
-    // Ensure it is set securely in your server environment.
-    const orderResponse = await order(
-      srcAssetAddress as Hex,
-      dstAssetAddress as Hex,
-      srcAmount.toString() // Ensure amount is a string or bigint
-      // gasData and privateKey are omitted; SDK handles PK from env
-    );
+    const sdkConfig = await config;
+    await sdkConfig.setTestnetMode(true);
+    sdkConfig.setGasFeeMultiplier(BigInt(2));
+    sdkConfig.setGasLimitMultiplier(BigInt(2));
+    const amt = await dollarToTokenValue(Number(srcAmount), srcAssetAddress);
+    const orderResponse = await order(srcAssetAddress as Hex, dstAssetAddress as Hex, amt);
 
     return NextResponse.json({ success: true, data: orderResponse });
   } catch (error: unknown) {
