@@ -39,14 +39,14 @@ export function TokenInput({
   };
 
   return (
-    <div>
-      <div className="bg-black/40 rounded-lg p-4 relative">
+    <div className="mb-3">
+      <div className="bg-black/50 backdrop-blur-sm rounded-lg p-4 border border-white/5 hover:border-white/10 transition-all relative">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-gray-400">{label}</span>
+          <span className="text-gray-400 font-medium">{label}</span>
           {token && (
             <button
               onClick={onTokenSelect}
-              className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-800 rounded-lg text-sm hover:bg-gray-700 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-800/80 rounded-lg text-sm hover:bg-gray-700/80 transition-colors cursor-pointer shadow-sm"
             >
               <Image
                 src={`/network/${token.network.toLowerCase()}.png`}
@@ -55,7 +55,7 @@ export function TokenInput({
                 height={16}
                 className="rounded-full"
               />
-              <span>{formatNetworkName(token.network)}</span>
+              <span className="text-white/90">{formatNetworkName(token.network)}</span>
             </button>
           )}
         </div>
@@ -78,24 +78,30 @@ export function TokenInput({
               onChange={handleAmountChange}
               placeholder="0"
               readOnly={readOnly}
-              className="bg-transparent text-3xl outline-none w-full"
+              className="bg-transparent text-3xl outline-none w-full text-white/90 placeholder-gray-500"
             />
           </div>
           <button
-            className="flex items-center gap-2 bg-black/30 px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition-colors"
+            className="flex items-center gap-2 bg-gray-800/80 px-3.5 py-2.5 rounded-lg hover:bg-gray-700/80 cursor-pointer transition-colors shadow-sm"
             onClick={onTokenSelect}
           >
             {token && (
               <>
-                <Image src={token.logoURI} alt={token.symbol} width={24} height={24} className="rounded-full" />
-                <span>{token.symbol}</span>
+                <Image
+                  src={token.logoURI}
+                  alt={token.symbol}
+                  width={24}
+                  height={24}
+                  className="rounded-full shadow-sm"
+                />
+                <span className="font-medium">{token.symbol}</span>
               </>
             )}
-            <ChevronDown size={20} />
+            <ChevronDown size={18} className="text-gray-400" />
           </button>
         </div>
         {showUsdValue && (
-          <div className="text-sm text-gray-400">
+          <div className="text-sm text-gray-400 font-medium">
             {typeof showUsdValue === 'string'
               ? formatCurrency(showUsdValue)
               : token?.current_price && formatCurrency(token.current_price * Number(amount))}

@@ -116,19 +116,19 @@ export function Swap() {
 
   if (loading) {
     return (
-      <div className="w-[400px] bg-black/95 rounded-xl p-4 text-white flex items-center justify-center h-[480px]">
+      <div className="w-[400px] bg-gradient-to-b from-black/95 to-black/90 rounded-xl p-6 text-white shadow-xl border border-white/5 flex items-center justify-center h-[480px]">
         <Loader text="Fetching tokens..." />
       </div>
     );
   }
 
   return (
-    <div className="w-[400px] bg-black/95 rounded-xl p-4 text-white">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Swap</h2>
+    <div className="w-[400px] bg-gradient-to-b from-black/95 to-black/90 rounded-xl p-6 text-white shadow-xl border border-white/5">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-semibold text-white/90">Swap</h2>
       </div>
 
-      <div className="relative">
+      <div className="relative mb-2">
         <TokenInput
           label="From"
           amount={amount}
@@ -148,11 +148,11 @@ export function Swap() {
         />
 
         <button
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-700 rounded-full p-1 border-4 border-black/95 hover:cursor-pointer hover:bg-gray-600"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full p-1.5 border-4 border-black/95 hover:cursor-pointer hover:from-blue-500 hover:to-blue-600 transition-all shadow-lg hover:shadow-xl active:scale-95 animate-subtle-pulse"
           onClick={swapTokens}
           aria-label="Swap tokens"
         >
-          <ArrowDownUp size={16} />
+          <ArrowDownUp size={18} className="text-white" />
         </button>
       </div>
 
@@ -185,18 +185,20 @@ export function Swap() {
 
       {swapStatus && (
         <div
-          className={`mt-4 p-3 rounded text-center text-sm ${swapStatus.success ? 'bg-green-800/60' : 'bg-red-800/60'}`}
+          className={`mt-6 p-4 rounded-lg text-center text-sm border ${
+            swapStatus.success ? 'bg-green-800/40 border-green-700/40' : 'bg-red-800/40 border-red-700/40'
+          }`}
         >
-          <div>{swapStatus.message}</div>
+          <div className="font-medium">{swapStatus.message}</div>
           {swapStatus.errorDetails && (
-            <div className="mt-1 text-xs text-gray-300 break-words">{swapStatus.errorDetails}</div>
+            <div className="mt-2 text-xs text-gray-300 break-words">{swapStatus.errorDetails}</div>
           )}
           {swapStatus.txHash && (
             <a
               href={getExplorerUrl(swapStatus.txHash, swapStatus.network)}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-300 hover:text-blue-200 underline mt-1 inline-block"
+              className="text-blue-300 hover:text-blue-200 underline mt-2 inline-block font-medium transition-colors"
             >
               View Transaction
             </a>
@@ -207,10 +209,10 @@ export function Swap() {
       <button
         onClick={handleSwap}
         disabled={isSwapping || !fromToken || !toToken || !amount}
-        className={`w-full mt-4 p-3 rounded font-semibold ${
+        className={`w-full mt-6 p-3.5 rounded-lg font-semibold transition-all duration-200 transform ${
           isSwapping || !fromToken || !toToken || !amount
-            ? 'bg-gray-600 cursor-not-allowed'
-            : 'bg-blue-600 hover:bg-blue-700'
+            ? 'bg-gray-600/70 cursor-not-allowed opacity-80'
+            : 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 hover:-translate-y-0.5 active:translate-y-0 shadow-md active:shadow-sm'
         }`}
       >
         {isSwapping ? <Loader text="Swapping..." /> : 'Swap'}
