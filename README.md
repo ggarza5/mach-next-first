@@ -2,7 +2,18 @@
 
 ## Overview
 
-A proof-of-concept frontend application demonstrating the MACH swap functionality.
+A proof-of-concept frontend application demonstrating the Mach SDK swap functionality.
+
+It uses the Mach SDK to connect to the Mach network and the Mach API to get the swap data.
+
+There are two simpe API routes -
+
+- /api/assets - get the list of assets supported by the Mach API
+- /api/order - create an order to swap the tokens
+
+This is a highly simplified Mach client. It is not production ready and is only meant to be used to demonstrate the simplicity of the Mach SDK.
+
+It uses a private key configured on the NextJS backend to fill the swap. As such, it does not support connecting wallets in the browser and only supports a single user (the owner of the private key configured in the backend's environment).
 
 ## Prerequisites
 
@@ -36,11 +47,12 @@ npm run build
 
 ```
 src/
-├── components/    # Reusable UI components
 ├── app/           # Route components
-    ├── api/       # API Route
-    └── embed/     # Embed Route
+    ├── api/       # API Routes
+├── components/    # Reusable UI components
+├── config/        # Handles grabbing the private key from the environment to fill swaps on the backend
 ├── hooks/         # Custom React hooks
+├── pages/         # Page components
 ├── types/         # Types defined
 └── utils/         # Helper functions
 ```
